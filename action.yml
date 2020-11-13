@@ -1,4 +1,4 @@
-name: "Swift Doc"
+name: "Swift Doc Coverage"
 description: "Generates documentation for your Swift project"
 
 inputs:
@@ -6,34 +6,18 @@ inputs:
     description: "A path to a directory containing Swift (`.swift`) files in your workspace"
     required: true
     default: "./Sources"
-  module-name:
-    description: "The name of the module"
-    required: true
-  format:
-    description: "The output format (commonmark or html)"
-    default: "commonmark"
-  base-url:
-    description: "The base URL for all relative URLs generated in documents"
-    required: false
-    default: "./"
   output:
     description: "The path for generated output"
     required: true
-    default: "./.build/documentation"
+    default: "./dcov.json"
 
 runs:
   using: "docker"
   image: "docker://swiftdoc/swift-doc:latest"
   args:
     [
-      generate,
+      coverage,
       "${{ inputs.inputs }}",
-      --format,
-      "${{ inputs.format }}",
-      --base-url,
-      "${{ inputs.base-url }}",
-      --module-name,
-      "${{ inputs.module-name }}",
       --output,
       "${{ inputs.output }}",
     ]
